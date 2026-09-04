@@ -1,0 +1,7 @@
+numpy==2.3.5
+scipy==1.17.0
+pandas==2.2.3
+scikit-learn==1.8.0
+opencv-python-headless==4.14.0.94
+joblib==1.5.3
+spectral==0.24
