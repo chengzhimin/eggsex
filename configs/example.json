@@ -2,7 +2,15 @@
   "device_id": "REPLACE_WITH_DEVICE",
   "protocol_id": "REPLACE_WITH_PROTOCOL",
   "synthetic": false,
-  "wavelengths_nm": [500, 550, 600, 650, 700, 750, 800],
+  "wavelengths_nm": [
+    500,
+    550,
+    600,
+    650,
+    700,
+    750,
+    800
+  ],
   "wavelength_tolerance_nm": 0.1,
   "min_reference_dn": 20,
   "min_valid_fraction": 0.95,
@@ -12,7 +20,13 @@
   "max_rgb_saturated_fraction": 0.01,
   "min_green_dn": 20,
   "clahe_clip": 2.0,
-  "clahe_grid": [8, 8],
+  "clahe_grid": [
+    8,
+    8
+  ],
   "validation_target_lower_bound": 0.9,
-  "min_accepted_per_sex": 10
+  "min_accepted_per_sex": 10,
+  "decision_policy": "research",
+  "age_min_h": 84,
+  "age_max_h": 96
 }

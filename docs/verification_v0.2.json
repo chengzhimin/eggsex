@@ -1,0 +1,36 @@
+{
+  "date": "2026-09-05",
+  "version": "0.2.0",
+  "real_egg_data_used": false,
+  "tests_passed": 17,
+  "checks": [
+    "three neural modes forward/backward",
+    "HSI and fusion one-epoch synthetic train/calibrate/save/reload/evaluate",
+    "test and development overlap rejected",
+    "invalid input recorded",
+    "classical nested CV for four model families",
+    "common-cohort classical benchmark with within-batch permutation",
+    "neural HSI outer batch CV",
+    "withheld final-test assets never opened",
+    "paired cluster bootstrap and label consistency",
+    "legacy three-mode SVM synthetic demo"
+  ],
+  "not_validated": [
+    "real-domain accuracy",
+    "CUDA training",
+    "ImageNet weight download",
+    "automatic segmentation",
+    "Grad-CAM",
+    "deep full-retraining permutation test"
+  ],
+  "environment": {
+    "numpy": "2.3.5",
+    "scipy": "1.17.0",
+    "pandas": "2.2.3",
+    "scikit-learn": "1.8.0",
+    "opencv-python-headless": "4.14.0.94",
+    "torch": "2.14.0+cpu",
+    "torchvision": "0.29.0+cpu",
+    "spectral": "0.24"
+  }
+}

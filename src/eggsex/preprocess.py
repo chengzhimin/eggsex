@@ -89,9 +89,17 @@ def image_features(path, mask_path, cfg, preview_dir=None):
     return np.asarray(features), names, {'saturated_fraction': sat_fraction}
 
 
-def extract(row, base, cfg, mode):
+def check_context(row, cfg):
     if row['device_id'] != cfg['device_id'] or row['protocol_id'] != cfg['protocol_id']:
         raise ValueError('device/protocol outside model contract')
+    if 'age_min_h' in cfg or 'age_max_h' in cfg:
+        age = float(row['age_h'])
+        if not np.isfinite(age) or not cfg['age_min_h'] <= age <= cfg['age_max_h']:
+            raise ValueError('age outside configured research interval')
+
+
+def extract(row, base, cfg, mode):
+    check_context(row, cfg)
     parts, names, qc = [], [], {}
     if mode in ('hsi', 'fusion'):
         f, n, q = cube_features(base / row['hsi_path'], cfg)

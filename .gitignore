@@ -8,3 +8,6 @@ runs/
 *.hdr
 *.raw
 *.img
+*.pt
+*.pth
+*.ckpt

@@ -18,7 +18,7 @@ def audit(df, labeled=True):
     required = ['egg_id','batch_id','device_id','protocol_id']
     if labeled:
         required += ['sex','split']
-    if (not set(required).issubset(df.columns) or df[required].isna().any().any()
+    if (df.empty or not set(required).issubset(df.columns) or df[required].isna().any().any()
             or df[required].astype(str).apply(lambda c: c.str.strip().eq('')).any().any()):
         raise ValueError('Missing metadata columns/values')
     if df['egg_id'].duplicated().any():
@@ -104,10 +104,14 @@ def train(manifest, config, out, mode):
         if value > score:
             best, score = model, value
     calibrated = CalibratedClassifierCV(FrozenEstimator(best), method='sigmoid').fit(x[ca], y[ca])
-    threshold = select_threshold(y[va], calibrated.predict_proba(x[va])[:,1],
-                                 cfg['validation_target_lower_bound'], cfg['min_accepted_per_sex'])
+    policy = cfg.get('decision_policy', 'research')
+    if policy not in ('research', 'selective'):
+        raise ValueError('decision_policy must be research or selective')
+    threshold = .5 if policy == 'research' else select_threshold(
+        y[va], calibrated.predict_proba(x[va])[:,1],
+        cfg['validation_target_lower_bound'], cfg['min_accepted_per_sex'])
     artifact = {'model':calibrated, 'config':cfg, 'mode':mode, 'feature_names':names,
-                'threshold':threshold, 'version':'0.1.0', 'production_ready':False,
+                'threshold':threshold, 'decision_policy':policy, 'version':'0.2.0', 'production_ready':False,
                 'label_map':{'M':0,'F':1}, 'synthetic':bool(cfg.get('synthetic', False)),
                 'manifest_sha256':hashlib.sha256(manifest.read_bytes()).hexdigest()}
     joblib.dump(artifact, out/'model.joblib')
